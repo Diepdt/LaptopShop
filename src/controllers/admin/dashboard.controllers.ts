@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { getAllUser } from "../../services/user.service";
+import { getAllUsers } from "../../services/user.service";
 
 const getDashboardPage = async (req: Request, res: Response) => {
     res.render("admin/dashboard/show.ejs");
 }
 
 const getAdminUserPage = async (req: Request, res: Response) => {
-    const users = await getAllUser();
+    const users = await getAllUsers();
     res.render("admin/user/show.ejs", { users: users });
 }
 

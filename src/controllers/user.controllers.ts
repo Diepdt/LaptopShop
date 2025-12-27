@@ -1,23 +1,25 @@
 import { Request, Response } from "express";
-import { getAllUser, getUserById, handleCreateUser, handleDeleteUser, updateUserById } from "../services/user.service";
+import { getAllUsers, getUserById, handleCreateUser, handleDeleteUser, updateUserById, getAllRoles } from "../services/user.service";
 
 const getHomePage = async (req: Request, res: Response) => {
     // get all user from database
-    const users = await getAllUser();
+    const users = await getAllUsers();
 
     // render homepage
     res.render("home", { users: users });
 }
 
-const getCreateUser = (req: Request, res: Response) => {
-    res.render("admin/user/create")
+const getCreateUser = async (req: Request, res: Response) => {
+    const roles = await getAllRoles();
+    res.render("admin/user/create", { roles })
 }
 
 const postCreateUserInfo = async (req: Request, res: Response) => {
-    const { name, email, address } = req.body;
+    const { fullname, email, phone, role, avatar, address } = req.body;
 
     // handleCreateUser
-    await handleCreateUser(name, email, address);
+    // await handleCreateUser(fullname, email, phone, role, avatar, address);
+    console.log(phone);
 
     res.redirect("/");
 }
