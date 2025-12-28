@@ -15,13 +15,14 @@ const getCreateUser = async (req: Request, res: Response) => {
 }
 
 const postCreateUserInfo = async (req: Request, res: Response) => {
-    const { fullname, email, phone, role, avatar, address } = req.body;
-
+    const { fullname, email, phone, role, address } = req.body;
+    const file = req.file;
+    const avatar = file?.filename ?? null;
     // handleCreateUser
-    // await handleCreateUser(fullname, email, phone, role, avatar, address);
-    console.log(phone);
+    await handleCreateUser(fullname, email, phone, avatar, address);
+    console.log("Create a new user successfully!");
 
-    res.redirect("/");
+    res.redirect("/admin/user");
 }
 
 const postDeleteUser = async (req: Request, res: Response) => {

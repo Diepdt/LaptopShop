@@ -35,9 +35,11 @@
                                 <table class="table table-hover table-striped table-boreded">
                                     <thead>
                                         <th>ID</th>
-                                        <th>Name</th>
+                                        <th>fullName</th>
                                         <th>Email</th>
                                         <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>Account type</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -47,10 +49,16 @@
                                                     <%= users.id %>
                                                 </td>
                                                 <td>
+                                                    <%= users.fullName %>
+                                                </td>
+                                                <td>
                                                     <%= users.username %>
                                                 </td>
                                                 <td>
-                                                    <%= users.password %>
+                                                    <%= users.address %>
+                                                </td>
+                                                <td>
+                                                    <%= users.phone %>
                                                 </td>
                                                 <td>
                                                     <%= users.accountType %>
