@@ -1,4 +1,5 @@
 import { prisma } from "./client";
+import { hashPassword } from "../services/user.service";
 
 const initDatabase = async () => {
     const countUser = await prisma.user.count();
@@ -9,11 +10,17 @@ const initDatabase = async () => {
             data: [
                 {
                     username: "Diepdt",
-                    password: "123456",
+                    fullName: "Dương Tuấn Điệp",
+                    address: "Ngọc Trục - Đại Mỗ - Nam Từ Liêm - Hà Nội",
+                    phone: "0867545881",
+                    password: await hashPassword("123456"),
                     accountType: "admin"
                 }, {
                     username: "Datnv",
-                    password: "12345",
+                    fullName: "Nguyễn Văn Đạt",
+                    address: "Trần Phú - Hà Đông - Hà Nội",
+                    phone: "086453539",
+                    password: await hashPassword("123456"),
                     accountType: "admin"
                 }
             ]
