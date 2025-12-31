@@ -7,10 +7,10 @@ const hashPassword = async (password: string) => {
     return await bcrypt.hash(password, saltRounds);
 }
 
-const handleCreateUser = async (fullname: string, email: string, phone: string, avatar: string, address: string) => {
+const handleCreateUser = async (fullname: string, email: string, phone: string, avatar: string, address: string, role: string) => {
     const password = await hashPassword("123456");
     const createUser = await prisma.user.create({
-        data: { username: email, password, fullName: fullname, address: address, phone: phone, accountType: ACCOUNT_TYPE.SYSTEM, avatar: avatar }
+        data: { username: email, password, fullName: fullname, address: address, phone: phone, accountType: ACCOUNT_TYPE.SYSTEM, avatar: avatar, roleId: +role } // +role : chuyen role tu string -> number
     });
 }
 
