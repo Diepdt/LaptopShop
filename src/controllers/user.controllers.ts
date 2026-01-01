@@ -36,12 +36,12 @@ const postDeleteUser = async (req: Request, res: Response) => {
 const getUserInfo = async (req: Request, res: Response) => {
     const id = req.params.id;
     const user = await getUserById(id);
-    res.render("view-user", { userInfo: user });
+    res.render("admin/user/detail", { user });
 }
 
 const updateUserInfo = async (req: Request, res: Response) => {
-    await updateUserById(req.params.id, req.body.name, req.body.email, req.body.address);
-    res.redirect("/");
+    await updateUserById(req.params.id, req.body.fullName, req.body.username, req.body.phone, req.body.address);
+    res.redirect("/admin/user");
 }
 
 export { getHomePage, getCreateUser, postCreateUserInfo, postDeleteUser, getUserInfo, updateUserInfo }

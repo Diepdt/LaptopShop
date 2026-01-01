@@ -8,16 +8,17 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     // user
     router.get("/", getHomePage);
 
-    router.post("/handle-delete-user/:id", postDeleteUser);
-    router.get("/handle-update-user/:id", getUserInfo);
-    router.post("/handle-update-user/:id", updateUserInfo);
+
 
     // admin
     router.get("/admin", getDashboardPage);
 
     router.get("/admin/user", getAdminUserPage);
-    router.get("/create-user", getCreateUser);
+    router.get("/admin/create-user", getCreateUser);
     router.post("/admin/create-user", fileUploadMiddleware("avatar"), postCreateUserInfo);
+    router.post("/admin/delete-user/:id", postDeleteUser);
+    router.get("/admin/update-user/:id", getUserInfo);
+    router.post("/admin/update-user/:id", updateUserInfo);
 
     router.get("/admin/product", getAdminProductPage);
 

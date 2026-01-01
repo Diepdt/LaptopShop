@@ -27,7 +27,7 @@
                             <div style="display:flex; justify-content: space-between; align-self: center;">
                                 <h5>List User:</h5>
                                 <div>
-                                    <a class="btn btn-warning" href="/create-user">Create a new user</a>
+                                    <a class="btn btn-warning" href="/admin/create-user">Create a new user</a>
                                 </div>
                             </div>
                             <hr>
@@ -69,12 +69,11 @@
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; gap: 10px;">
-                                                        <form action="/handle-update-user/<%= users.id %>" method="get">
+                                                        <form action="/admin/update-user/<%= users.id %>" method="get">
                                                             <button type="submit"
                                                                 class="btn btn-warning">Update</button>
                                                         </form>
-                                                        <form action="/handle-delete-user/<%= users.id %>"
-                                                            method="post">
+                                                        <form action="/admin/delete-user/<%= users.id %>" method="post">
                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
