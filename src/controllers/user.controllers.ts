@@ -36,11 +36,12 @@ const postDeleteUser = async (req: Request, res: Response) => {
 const getUserInfo = async (req: Request, res: Response) => {
     const id = req.params.id;
     const user = await getUserById(id);
-    res.render("admin/user/detail", { user });
+    const roles = await getAllRoles();
+    res.render("admin/user/detail", { user, roles });
 }
 
 const updateUserInfo = async (req: Request, res: Response) => {
-    await updateUserById(req.params.id, req.body.fullName, req.body.username, req.body.phone, req.body.address);
+    await updateUserById(req.params.id, req.body.fullName, req.body.username, req.body.phone, req.body.address, req.body.role);
     res.redirect("/admin/user");
 }
 

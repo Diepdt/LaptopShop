@@ -18,7 +18,7 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     router.post("/admin/create-user", fileUploadMiddleware("avatar"), postCreateUserInfo);
     router.post("/admin/delete-user/:id", postDeleteUser);
     router.get("/admin/update-user/:id", getUserInfo);
-    router.post("/admin/update-user/:id", updateUserInfo);
+    router.post("/admin/update-user/:id", fileUploadMiddleware("avatar"), updateUserInfo);
 
     router.get("/admin/product", getAdminProductPage);
 

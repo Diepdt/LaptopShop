@@ -56,8 +56,17 @@
                                             <input name="phone" type="text" class="form-control"
                                                 value="<%= user.phone %>">
                                         </div>
-
-
+                                        <div class="mb-3 col-6">
+                                            <label class="form-label">Role:</label>
+                                            <select name="role" class="form-select">
+                                                <% roles.forEach((role, index)=> { %>
+                                                    <option value="<%= role.id %>" <%=user.roleId===role.id ? 'selected'
+                                                        : '' %>>
+                                                        <%= role.name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Avatar:</label>
