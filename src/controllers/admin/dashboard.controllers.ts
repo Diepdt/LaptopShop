@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllUsers } from "../../services/user.service";
+import { getAllRoles, getAllUsers } from "../../services/user.service";
 
 const getDashboardPage = async (req: Request, res: Response) => {
     res.render("admin/dashboard/show.ejs");
@@ -7,7 +7,8 @@ const getDashboardPage = async (req: Request, res: Response) => {
 
 const getAdminUserPage = async (req: Request, res: Response) => {
     const users = await getAllUsers();
-    res.render("admin/user/show.ejs", { users: users });
+    const roles = await getAllRoles();
+    res.render("admin/user/show.ejs", { users, roles });
 }
 
 const getAdminProductPage = async (req: Request, res: Response) => {

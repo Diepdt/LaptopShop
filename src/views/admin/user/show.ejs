@@ -44,36 +44,39 @@
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
-                                        <% users.forEach( function (users) { %>
+                                        <% users.forEach( function (user) { %>
                                             <tr>
                                                 <td>
-                                                    <%= users.id %>
+                                                    <%= user.id %>
                                                 </td>
                                                 <td>
-                                                    <%= users.fullName %>
+                                                    <%= user.fullName %>
                                                 </td>
                                                 <td>
-                                                    <%= users.username %>
+                                                    <%= user.username %>
                                                 </td>
                                                 <td>
-                                                    <%= users.address %>
+                                                    <%= user.address %>
                                                 </td>
                                                 <td>
-                                                    <%= users.phone %>
+                                                    <%= user.phone %>
                                                 </td>
                                                 <td>
-                                                    <%= users.accountType %>
+                                                    <%= user.accountType %>
                                                 </td>
                                                 <td>
-                                                    <%= users.roleId %>
+                                                    <% roles.forEach(function(role) { %>
+                                                        <% if (role.id==user.roleId) { %>
+                                                            <%= role.name %>
+                                                                <% } %>
+                                                                    <% }); %>
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; gap: 10px;">
-                                                        <form action="/admin/update-user/<%= users.id %>" method="get">
-                                                            <button type="submit"
-                                                                class="btn btn-warning">Update</button>
+                                                        <form action="/admin/update-user/<%= user.id %>" method="get">
+                                                            <button type="submit" class="btn btn-info">View</button>
                                                         </form>
-                                                        <form action="/admin/delete-user/<%= users.id %>" method="post">
+                                                        <form action="/admin/delete-user/<%= user.id %>" method="post">
                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>

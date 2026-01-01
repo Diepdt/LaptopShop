@@ -41,7 +41,9 @@ const getUserInfo = async (req: Request, res: Response) => {
 }
 
 const updateUserInfo = async (req: Request, res: Response) => {
-    await updateUserById(req.params.id, req.body.fullName, req.body.username, req.body.phone, req.body.address, req.body.role);
+    const file = req.file;
+    const avatar = file?.filename ?? undefined;
+    await updateUserById(req.params.id, req.body.fullName, req.body.username, req.body.phone, req.body.address, req.body.role, avatar);
     res.redirect("/admin/user");
 }
 

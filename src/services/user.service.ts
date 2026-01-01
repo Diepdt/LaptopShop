@@ -33,10 +33,13 @@ const getUserById = async (id: string) => {
     return user;
 }
 
-const updateUserById = async (id: string, fullName: string, username: string, phone: string, address: string, role: string) => {
+const updateUserById = async (id: string, fullName: string, username: string, phone: string, address: string, role: string, avatar: string) => {
     const updateUser = await prisma.user.update({
         where: { id: Number(id) },
-        data: { fullName: fullName, username: username, phone: phone, address: address, roleId: Number(role) }
+        data: {
+            fullName: fullName, username: username, phone: phone, address: address, roleId: Number(role),
+            ...(avatar !== undefined && { avatar: avatar }) // chỉ cập nhật nếu thêm file avatar mới
+        }
     })
 }
 
