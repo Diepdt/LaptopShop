@@ -2,11 +2,14 @@ import express, { Express } from 'express'; // const express = require('express'
 import { getCreateUser, getHomePage, getUserInfo, postCreateUserInfo, postDeleteUser, updateUserInfo } from '../controllers/user.controllers';
 import { getAdminUserPage, getDashboardPage, getAdminProductPage, getAdminOrderPage } from '../controllers/admin/dashboard.controllers';
 import fileUploadMiddleware from '../middleware/multer';
+import { getClientProductPage } from '../controllers/client/product.controllers';
 const router = express.Router();
 
 const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     // user
     router.get("/", getHomePage);
+
+    router.get("/product/:id", getClientProductPage);
 
     // admin
     router.get("/admin", getDashboardPage);
