@@ -8,8 +8,6 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     // user
     router.get("/", getHomePage);
 
-
-
     // admin
     router.get("/admin", getDashboardPage);
 
