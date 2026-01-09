@@ -48,6 +48,46 @@ const initDatabase = async () => {
             ]
         })
     }
+
+    const countProduct = await prisma.product.count();
+    if (countProduct > 0) {
+        console.log("Already init product data!");
+    } else {
+        await prisma.product.createMany({
+            data: [
+                {
+                    name: "MacBook Pro 14 M3",
+                    price: 45990000,
+                    detailDesc: "Chip Apple M3 Pro mạnh mẽ, RAM 18GB, SSD 512GB. Màn hình Liquid Retina XDR hiển thị siêu sắc nét, pin trâu 18 tiếng.",
+                    shortDesc: "Laptop đồ họa chuyên nghiệp, mỏng nhẹ.",
+                    quantity: 15,
+                    sold: 50000000,
+                    factory: "Apple",
+                    target: "Designer / Coder"
+                },
+                {
+                    name: "Dell XPS 13 Plus",
+                    price: 38500000,
+                    detailDesc: "Thiết kế tương lai với bàn phím vô cực, chip Intel Core i7 Gen 13, màn hình OLED cảm ứng. Vỏ nhôm nguyên khối sang trọng.",
+                    shortDesc: "Ultrabook cao cấp cho doanh nhân.",
+                    quantity: 20,
+                    sold: 39000000,
+                    factory: "Dell",
+                    target: "Doanh nhân"
+                },
+                {
+                    name: "Asus ROG Strix G16",
+                    price: 32990000,
+                    detailDesc: "Chiến thần Gaming với card RTX 4060 8GB, chip i9-13980HX. Hệ thống tản nhiệt 3 quạt mát rượi, đèn LED RGB cực chất.",
+                    shortDesc: "Laptop Gaming hiệu năng khủng.",
+                    quantity: 50,
+                    sold: 35000000,
+                    factory: "Asus",
+                    target: "Gaming"
+                }
+            ]
+        })
+    }
 }
 
 export default initDatabase;
