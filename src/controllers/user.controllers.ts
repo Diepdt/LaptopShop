@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { getAllUsers, getUserById, handleCreateUser, handleDeleteUser, updateUserById, getAllRoles } from "../services/user.service";
+import { createUserSchema } from "../validations/user.validation";
 
 const getHomePage = async (req: Request, res: Response) => {
     // render homepage
@@ -12,6 +13,14 @@ const getCreateUser = async (req: Request, res: Response) => {
 }
 
 const postCreateUserInfo = async (req: Request, res: Response) => {
+    const validation = createUserSchema.safeParse(req.body);
+    if (!validation.success) {
+        const errors = validation.error.format();
+        return res.render("admin/user/create.ejs", {
+            errors,
+            data: req.body // Trả lại dữ liệu cũ để không bị mất form
+        });
+    }
     const { fullname, email, phone, role, address } = req.body;
     const file = req.file;
     const avatar = file?.filename ?? null;

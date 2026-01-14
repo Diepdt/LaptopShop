@@ -17,7 +17,7 @@ export const handleCreateProduct = async (name: string, price: string, detailDes
             sold: Number.parseInt(sold),
             factory: factory,
             target: target,
-            image: productImage
+            ...(productImage && { image: productImage }) // nếu productImage # null thì insert vào database
         }
     });
 }
