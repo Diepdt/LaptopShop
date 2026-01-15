@@ -5,6 +5,9 @@
 
 */
 -- AlterTable
+ALTER TABLE `products` MODIFY `sold` INTEGER NULL DEFAULT 0;
+
+-- AlterTable
 ALTER TABLE `users` ADD COLUMN `roleId` INTEGER NOT NULL;
 
 -- AddForeignKey

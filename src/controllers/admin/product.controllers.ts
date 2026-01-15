@@ -8,16 +8,22 @@ export const getAdminProductPage = async (req: Request, res: Response) => {
 }
 
 export const getCreateProduct = (req: Request, res: Response) => {
-    res.render("admin/product/create.ejs");
+    const errors = [];
+    const oldData = {
+        name: "", price: "", image: "", detailDesc: "", shortDesc: "",
+        quantity: "", sold: "", factory: "", target: ""
+    };
+    res.render("admin/product/create.ejs", { errors, oldData });
 }
 
 export const postCreateProduct = async (req: Request, res: Response) => {
     const validation = createProductSchema.safeParse(req.body);
     if (!validation.success) {
-        const errors = validation.error.format();
+        const errorsZod = validation.error.issues;
+        const errors = errorsZod.map(item => `${item.message}`);
         return res.render("admin/product/create.ejs", {
             errors,
-            data: req.body // Trả lại dữ liệu cũ để không bị mất form
+            oldData: req.body // Trả lại dữ liệu cũ để không bị mất form
         });
     }
     const { name, price, detailDesc, shortDesc, quantity, sold, factory, target } = req.body;
