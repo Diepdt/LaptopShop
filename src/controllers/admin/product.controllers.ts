@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllProducts, handleCreateProduct } from "../../services/product.service";
+import { getAllProducts, getProductInfo, handleCreateProduct, updateProductById } from "../../services/product.service";
 import { createProductSchema } from "../../validations/product.validation";
 
 export const getAdminProductPage = async (req: Request, res: Response) => {
@@ -30,5 +30,26 @@ export const postCreateProduct = async (req: Request, res: Response) => {
     const file = req.file;
     const productImage = file?.filename ?? null;
     await handleCreateProduct(name, price, detailDesc, shortDesc, quantity, sold, factory, target, productImage);
+    res.redirect("/admin/product");
+}
+
+export const getAdminUpdateProductPage = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const data = await getProductInfo(id);
+    const errors = [];
+    res.render("admin/product/detail.ejs", { data, errors });
+}
+
+export const updateProductInfo = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const  validation = createProductSchema.safeParse(req.body);
+    if (!validation.success) {
+        const errors = validation.error.flatten().fieldErrors;
+        const data = req.body;
+        
+        res.render("admin/product/detail.ejs", {errors, data})
+    }
+    console.log("check validation successfully");
+    await updateProductById(id, req.body.name, req.body.price, req.body.detailDesc, req.body.shortDesc, req.body.quantity, req.body.sold, req.body.factory, req.body.target);
     res.redirect("/admin/product");
 }

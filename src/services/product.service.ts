@@ -21,3 +21,24 @@ export const handleCreateProduct = async (name: string, price: string, detailDes
         }
     });
 }
+
+export const getProductInfo = async (id: string) => {
+    const data = await prisma.product.findUnique({ where: { id: +id } })
+    return data;
+}
+
+export const updateProductById = async (id: string, name: string, price: string, detailDesc: string, shortDesc: string, quantity: string, sold: string, factory: string, target: string) => {
+    await prisma.product.update({
+        where: { id: +id }, data: {
+            name: name,
+            price: +price,
+            detailDesc: detailDesc,
+            shortDesc: shortDesc,
+            quantity: +quantity,
+            sold: +sold,
+            factory: factory,
+            target: target
+        }
+    })
+    console.log(`Update product ${id} successfully!`);
+}

@@ -4,8 +4,7 @@ import { getAdminUserPage, getDashboardPage } from '../controllers/admin/dashboa
 import fileUploadMiddleware from '../middleware/multer';
 import { getClientProductPage } from '../controllers/client/product.controllers';
 import { getAdminOrderPage } from '../controllers/admin/order.controllers';
-import { getAdminProductPage, getCreateProduct, postCreateProduct } from '../controllers/admin/product.controllers';
-import { createUserSchema } from '../validations/user.validation';
+import { getAdminProductPage, getAdminUpdateProductPage, getCreateProduct, postCreateProduct, updateProductInfo } from '../controllers/admin/product.controllers';
 const router = express.Router();
 
 const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
@@ -27,7 +26,8 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     router.get("/admin/product", getAdminProductPage);
     router.get("/admin/create-product", getCreateProduct);
     router.post("/admin/create-product", fileUploadMiddleware("productImage", "images/products"), postCreateProduct);
-
+    router.get("/admin/update-product/:id", getAdminUpdateProductPage);
+    router.post("/admin/update-product/:id", fileUploadMiddleware("productImage", "images/products"), updateProductInfo)
 
     router.get("/admin/order", getAdminOrderPage);
 

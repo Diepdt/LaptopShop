@@ -9,25 +9,29 @@ const getHomePage = async (req: Request, res: Response) => {
 
 const getCreateUser = async (req: Request, res: Response) => {
     const roles = await getAllRoles();
-    res.render("admin/user/create", { roles })
+    const errors = [];
+    const data = {fullname: "", email: "", phone: "", role: "", address: ""};
+    res.render("admin/user/create", { roles, errors, data })
 }
 
 const postCreateUserInfo = async (req: Request, res: Response) => {
     const validation = createUserSchema.safeParse(req.body);
     if (!validation.success) {
-        const errors = validation.error.format();
+        const errors = validation.error.flatten().fieldErrors;
+        const roles = await getAllRoles();
         return res.render("admin/user/create.ejs", {
             errors,
+            roles,
             data: req.body // Trả lại dữ liệu cũ để không bị mất form
         });
     }
+        
+    // handleCreateUser
     const { fullname, email, phone, role, address } = req.body;
     const file = req.file;
     const avatar = file?.filename ?? null;
-    // handleCreateUser
     await handleCreateUser(fullname, email, phone, avatar, address, role);
     console.log("Create a new user successfully!");
-
     res.redirect("/admin/user");
 }
 
@@ -43,7 +47,9 @@ const getUserInfo = async (req: Request, res: Response) => {
     const id = req.params.id;
     const user = await getUserById(id);
     const roles = await getAllRoles();
-    res.render("admin/user/detail", { user, roles });
+    const validation = createUserSchema.safeParse(req.body);
+    const errors = validation.error.flatten().fieldErrors;
+    res.render("admin/user/detail", { user, roles, errors });
 }
 
 const updateUserInfo = async (req: Request, res: Response) => {
