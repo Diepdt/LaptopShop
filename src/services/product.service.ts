@@ -42,3 +42,9 @@ export const updateProductById = async (id: string, name: string, price: string,
     })
     console.log(`Update product ${id} successfully!`);
 }
+
+export const deleteProductById = async (id: string) => {
+    await prisma.product.delete({
+        where: {id: +id}
+    });
+}

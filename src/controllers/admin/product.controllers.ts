@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { getAllProducts, getProductInfo, handleCreateProduct, updateProductById } from "../../services/product.service";
+import { deleteProductById, getAllProducts, getProductInfo, handleCreateProduct, updateProductById } from "../../services/product.service";
 import { createProductSchema } from "../../validations/product.validation";
+import { prisma } from "../../config/client";
 
 export const getAdminProductPage = async (req: Request, res: Response) => {
     const products = await getAllProducts();
@@ -51,5 +52,11 @@ export const updateProductInfo = async (req: Request, res: Response) => {
     }
     console.log("check validation successfully");
     await updateProductById(id, req.body.name, req.body.price, req.body.detailDesc, req.body.shortDesc, req.body.quantity, req.body.sold, req.body.factory, req.body.target);
+    res.redirect("/admin/product");
+}
+
+export const postDeleteProduct = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    await deleteProductById(id);
     res.redirect("/admin/product");
 }
