@@ -1,4 +1,4 @@
-import { prisma } from "../config/client";
+import { prisma } from "../../config/client";
 
 export const getAllProducts = async () => {
     const listProducts = await prisma.product.findMany();

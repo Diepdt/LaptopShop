@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { deleteProductById, getAllProducts, getProductInfo, handleCreateProduct, updateProductById } from "../../services/product.service";
+import { deleteProductById, getAllProducts, getProductInfo, handleCreateProduct, updateProductById } from "../../services/admin/product.service";
 import { createProductSchema } from "../../validations/product.validation";
-import { prisma } from "../../config/client";
 
 export const getAdminProductPage = async (req: Request, res: Response) => {
     const products = await getAllProducts();
