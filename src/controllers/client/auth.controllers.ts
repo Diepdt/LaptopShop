@@ -4,7 +4,7 @@ import { registerNewUser } from "../../services/client/auth.service";
 
 export const getUserRegisterPage = (req: Request, res: Response) => {
     const oldData = [];
-    const errors = {};
+    const errors = [];
     return res.render("user/register.ejs", { oldData, errors });
 }
 

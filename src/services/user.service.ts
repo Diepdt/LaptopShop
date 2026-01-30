@@ -43,4 +43,9 @@ const updateUserById = async (id: string, fullName: string, username: string, ph
     })
 }
 
-export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, updateUserById, getAllRoles, hashPassword }
+const comparePassword = async (plaintextPassword: string, hashPassword: string) => {
+    const isMatch = await bcrypt.compare(plaintextPassword, hashPassword);
+    return isMatch;
+}
+
+export { handleCreateUser, getAllUsers, handleDeleteUser, getUserById, updateUserById, getAllRoles, hashPassword, comparePassword }
