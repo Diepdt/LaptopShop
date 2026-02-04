@@ -17,7 +17,8 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     router.get("/user/login", getUserLoginPage);
     router.post("/user/login", passport.authenticate('local', {
         successRedirect: "/",
-        failureRedirect: "/user/login"
+        failureRedirect: "/user/login",
+        failureMessage: true
     }));
 
     router.get("/product/:id", getClientProductPage);

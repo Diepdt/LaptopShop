@@ -127,29 +127,35 @@
             <p class="mb-0 mt-2">Chào mừng bạn đến với LaptopShop</p>
         </div>
         <div class="login-body">
-            <form action="/user/login" method="POST">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" required>
+            <% messages.forEach ((message)=> { %>
+                <div class="alert alert-danger mb-3">
+                    <%= message %>
                 </div>
+                <% }) %>
+                    <form action="/user/login" method="POST">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập"
+                                required>
+                        </div>
 
-                <div class="input-group mb-4">
-                    <span class="input-group-text">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
-                </div>
+                        <div class="input-group mb-4">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
+                        </div>
 
-                <button type="submit" class="btn btn-login">
-                    <i class="fas fa-sign-in-alt me-2">Đăng Nhập</i>
-                </button>
-            </form>
+                        <button type="submit" class="btn btn-login">
+                            <i class="fas fa-sign-in-alt me-2">Đăng Nhập</i>
+                        </button>
+                    </form>
 
-            <div class="register-link">
-                <p class="mb-0">Chưa có tài khoản? <a href="/user/register">Đăng ký ngay</a></p>
-            </div>
+                    <div class="register-link">
+                        <p class="mb-0">Chưa có tài khoản? <a href="/user/register">Đăng ký ngay</a></p>
+                    </div>
         </div>
     </div>
 
