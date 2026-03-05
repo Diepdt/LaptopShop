@@ -24,9 +24,17 @@ export const postRegister = async (req: Request, res: Response) => {
 
 export const getUserLoginPage = (req: Request, res: Response) => {
     const { session } = req as any; // tại sao ép kiểu any sẽ không bị lỗi session
-    const messages = session?.messages ?? []; // passport lưu vào session.messages (có "s")
+    const messages = session?.messages ?? []; // passport lưu vào session.messages
     // Xóa messages sau khi đã lấy để không hiển thị lại khi refresh
     delete session.messages;
     return res.render("user/login.ejs", { messages });
 }
 
+export const getAuthentication = (req: Request, res: Response) => {
+    const user = req.user as any;
+    if (user.roleName === "ADMIN") {
+        res.redirect("/admin");
+    } else {
+        res.redirect("/");
+    }
+}

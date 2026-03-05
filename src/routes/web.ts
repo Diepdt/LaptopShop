@@ -5,18 +5,20 @@ import fileUploadMiddleware from '../middleware/multer';
 import { getClientProductPage } from '../controllers/client/product.controllers';
 import { getAdminOrderPage } from '../controllers/admin/order.controllers';
 import { getAdminProductPage, getAdminUpdateProductPage, getCreateProduct, postCreateProduct, postDeleteProduct, updateProductInfo } from '../controllers/admin/product.controllers';
-import { getUserLoginPage, getUserRegisterPage, postRegister } from '../controllers/client/auth.controllers';
+import { getAuthentication, getUserLoginPage, getUserRegisterPage, postRegister } from '../controllers/client/auth.controllers';
 import passport from 'passport';
+import { isLogin } from '../middleware/auth';
 const router = express.Router();
 
 const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     // user
     router.get("/", getHomePage);
+    router.get("/user/authentication", getAuthentication);
     router.get("/user/register", getUserRegisterPage);
     router.post("/user/register", postRegister);
-    router.get("/user/login", getUserLoginPage);
+    router.get("/user/login", isLogin, getUserLoginPage);
     router.post("/user/login", passport.authenticate('local', {
-        successRedirect: "/",
+        successRedirect: "/user/authentication",
         failureRedirect: "/user/login",
         failureMessage: true
     }));

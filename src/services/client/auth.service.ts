@@ -25,13 +25,15 @@ export const handleLogin = async (username: string, password: string, callback: 
         where: { username }
     });
     if (!user) {
-        return callback(null, false, { message: `Username ${username} isn't exit!` });
+        console.log(`Username ${username} isn't exit!`);
+        return callback(null, false, { message: "Username/password is incorrect!" });
     }
 
     // compare password
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
-        return callback(null, false, { message: "Incorrect password!" });
+        console.log("Incorrect password!");
+        return callback(null, false, { message: "Username/password is incorrect!" });
     }
     return callback(null, user);
 }

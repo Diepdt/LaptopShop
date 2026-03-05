@@ -13,9 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Session { 
+  id        String   @id 
+  sid       String   @unique 
+  data      String  @db.MediumText 
+  expiresAt DateTime 
+}
+
 model User {
   id          Int     @id @default(autoincrement())
-  username    String  @db.VarChar(255)
+  username    String  @unique @db.VarChar(255)
   password    String  @db.VarChar(255)
   fullName    String? @db.VarChar(255)
   address     String? @db.VarChar(255)
