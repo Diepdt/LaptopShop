@@ -7,7 +7,7 @@ import { getAdminOrderPage } from '../controllers/admin/order.controllers';
 import { getAdminProductPage, getAdminUpdateProductPage, getCreateProduct, postCreateProduct, postDeleteProduct, updateProductInfo } from '../controllers/admin/product.controllers';
 import { getAuthentication, getUserLoginPage, getUserRegisterPage, postRegister } from '../controllers/client/auth.controllers';
 import passport from 'passport';
-import { isLogin } from '../middleware/auth';
+import { isAdmin, isLogin } from '../middleware/auth';
 const router = express.Router();
 
 const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
@@ -26,7 +26,7 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     router.get("/product/:id", getClientProductPage);
 
     // admin
-    router.get("/admin", getDashboardPage);
+    router.get("/admin",isAdmin, getDashboardPage);
 
     router.get("/admin/user", getAdminUserPage);
     router.get("/admin/create-user", getCreateUser);

@@ -5,8 +5,24 @@ export const isLogin = (req: Request, res: Response, next: NextFunction) => {
     const isAuthenticated = req.isAuthenticated();
     if (isAuthenticated) {
         res.redirect("/");
+        return; 
     } else {
         next();
+    }
+}
+
+// check chỉ có admin mới được truy cập vào AdminPage
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+    const isAuthenticated = req.isAuthenticated();
+    if (!req.isAuthenticated()) {
+        res.redirect("/user/login");
+        return; 
+    }
+    const user = req.user as any;
+    if (user.roleName === "ADMIN") {
+        return next();
+    } else {
+        res.redirect("/");
     }
 }
 
