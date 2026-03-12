@@ -46,8 +46,7 @@ export const updateProductInfo = async (req: Request, res: Response) => {
     if (!validation.success) {
         const errors = validation.error.flatten().fieldErrors;
         const data = req.body;
-        
-        res.render("admin/product/detail.ejs", {errors, data})
+        return res.render("admin/product/detail.ejs", {errors, data});
     }
     console.log("check validation successfully");
     await updateProductById(id, req.body.name, req.body.price, req.body.detailDesc, req.body.shortDesc, req.body.quantity, req.body.sold, req.body.factory, req.body.target);

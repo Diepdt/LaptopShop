@@ -18,7 +18,12 @@ export const postRegister = async (req: Request, res: Response) => {
         return res.render("user/register.ejs", { oldData, errors });
     }
     // success
-    await registerNewUser(username, password, fullName, phone, address);
+    const result = await registerNewUser(username, password, fullName, phone, address);
+    if (!result.success) {
+        const errors = [result.message];
+        const oldData = { username, password, confirmPassword, fullName, phone, address };
+        return res.render("user/register.ejs", { oldData, errors });
+    }
     return res.redirect("/user/login");
 }
 
@@ -31,10 +36,20 @@ export const getUserLoginPage = (req: Request, res: Response) => {
 }
 
 export const getAuthentication = (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/user/login");
+    }
     const user = req.user as any;
     if (user.roleName === "ADMIN") {
         res.redirect("/admin");
     } else {
         res.redirect("/");
     }
+}
+
+export const postLogout = (req: Request, res: Response, next: any) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect("/");
+    });
 }

@@ -54,11 +54,14 @@ app.use((req, res, next) => {
 webRoutes(app);
 
 // seeding data
-initDatabase();
+initDatabase().catch((err) => {
+    console.error("Database initialization failed:", err.message);
+});
 
 // handle 404 not found
 app.use((req, res) => {
-    res.send("404 not found.");
+    // res.send("404 not found.");
+    res.render("status/404.ejs");
 })
 
 app.listen(PORT, () => {

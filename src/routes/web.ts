@@ -5,7 +5,7 @@ import fileUploadMiddleware from '../middleware/multer';
 import { getClientProductPage } from '../controllers/client/product.controllers';
 import { getAdminOrderPage } from '../controllers/admin/order.controllers';
 import { getAdminProductPage, getAdminUpdateProductPage, getCreateProduct, postCreateProduct, postDeleteProduct, updateProductInfo } from '../controllers/admin/product.controllers';
-import { getAuthentication, getUserLoginPage, getUserRegisterPage, postRegister } from '../controllers/client/auth.controllers';
+import { getAuthentication, getUserLoginPage, getUserRegisterPage, postLogout, postRegister } from '../controllers/client/auth.controllers';
 import passport from 'passport';
 import { isAdmin, isLogin } from '../middleware/auth';
 const router = express.Router();
@@ -22,11 +22,12 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
         failureRedirect: "/user/login",
         failureMessage: true
     }));
+    router.post("/user/logout", postLogout);
 
     router.get("/product/:id", getClientProductPage);
 
     // admin
-    router.get("/admin",isAdmin, getDashboardPage);
+    router.get("/admin", getDashboardPage);
 
     router.get("/admin/user", getAdminUserPage);
     router.get("/admin/create-user", getCreateUser);
@@ -44,7 +45,7 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
 
     router.get("/admin/order", getAdminOrderPage);
 
-    app.use("/", router);
+    app.use("/", isAdmin, router);
 }
 
 export default webRoutes;

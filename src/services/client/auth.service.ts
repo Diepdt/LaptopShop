@@ -3,6 +3,10 @@ import { ACCOUNT_TYPE } from "../../config/constant";
 import { comparePassword, hashPassword } from "../user.service";
 
 export const registerNewUser = async (username: string, password: string, fullName: string, phone: string, address: string) => {
+    const existingUser = await prisma.user.findUnique({ where: { username } });
+    if (existingUser) {
+        return { success: false, message: "Username đã tồn tại, vui lòng chọn tên khác." };
+    }
     const userRole = await prisma.role.findFirst({
         where: { name: "USER" }
     });
@@ -14,6 +18,7 @@ export const registerNewUser = async (username: string, password: string, fullNa
                 accountType: ACCOUNT_TYPE.SYSTEM, roleId: userRole.id
             }
         });
+        return { success: true };
     } else {
         throw new Error("User role không tồn tại.")
     }

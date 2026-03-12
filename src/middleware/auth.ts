@@ -13,22 +13,25 @@ export const isLogin = (req: Request, res: Response, next: NextFunction) => {
 
 // check chỉ có admin mới được truy cập vào AdminPage
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-    const isAuthenticated = req.isAuthenticated();
-    if (!req.isAuthenticated()) {
-        res.redirect("/user/login");
-        return; 
+    if (req.path.startsWith("/admin")) {
+        if (!req.isAuthenticated()) {
+            res.redirect("/user/login");
+            return;
+        }
+        const user = req.user as any;
+        if (user.roleName === "ADMIN") {
+            return next();
+        } else {
+            res.render("status/403.ejs");
+            return;
+        }
     }
-    const user = req.user as any;
-    if (user.roleName === "ADMIN") {
-        return next();
-    } else {
-        res.redirect("/");
-    }
+    return next();
 }
 
-export const getUserWithRoleById = async (id: string) => {
+export const getUserWithRoleById = async (id: number) => {
     const user = await prisma.user.findUnique({
-        where: {id: +id},
+        where: {id},
         select: {
             id: true,
             username: true,
@@ -44,6 +47,8 @@ export const getUserWithRoleById = async (id: string) => {
         }
     })
 
+    if (!user) return null;
+
     // "Làm phẳng" (Flatten) bằng Javascript
     const {role, ...rest} = user;
     return {
@@ -51,3 +56,10 @@ export const getUserWithRoleById = async (id: string) => {
         roleName: role?.name
     };
 }
+
+// export const postLogout = async (req: Request, res: Response, next: NextFunction) => {
+//     req.logout (function(err) {
+//         if (err) {return next(err);}
+//         res.redirect("/");
+//     });
+// }
