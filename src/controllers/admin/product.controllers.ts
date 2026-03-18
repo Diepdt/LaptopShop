@@ -49,7 +49,9 @@ export const updateProductInfo = async (req: Request, res: Response) => {
         return res.render("admin/product/detail.ejs", {errors, data});
     }
     console.log("check validation successfully");
-    await updateProductById(id, req.body.name, req.body.price, req.body.detailDesc, req.body.shortDesc, req.body.quantity, req.body.sold, req.body.factory, req.body.target);
+    const file = req.file;
+    const productImage = file?.filename ?? null;
+    await updateProductById(id, req.body.name, req.body.price, req.body.detailDesc, req.body.shortDesc, req.body.quantity, req.body.sold, req.body.factory, req.body.target, productImage);
     res.redirect("/admin/product");
 }
 

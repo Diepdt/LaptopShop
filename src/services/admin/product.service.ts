@@ -27,7 +27,7 @@ export const getProductInfo = async (id: string) => {
     return data;
 }
 
-export const updateProductById = async (id: string, name: string, price: string, detailDesc: string, shortDesc: string, quantity: string, sold: string, factory: string, target: string) => {
+export const updateProductById = async (id: string, name: string, price: string, detailDesc: string, shortDesc: string, quantity: string, sold: string, factory: string, target: string, productImage: string | null) => {
     await prisma.product.update({
         where: { id: +id }, data: {
             name: name,
@@ -37,7 +37,8 @@ export const updateProductById = async (id: string, name: string, price: string,
             quantity: +quantity,
             sold: +sold,
             factory: factory,
-            target: target
+            target: target,
+            ...(productImage && { image: productImage }) // chỉ update image nếu có file mới
         }
     })
     console.log(`Update product ${id} successfully!`);
