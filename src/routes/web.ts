@@ -2,7 +2,7 @@ import express, { Express } from 'express'; // const express = require('express'
 import { getCreateUser, getHomePage, getUserInfo, postCreateUserInfo, postDeleteUser, updateUserInfo } from '../controllers/user.controllers';
 import { getAdminUserPage, getDashboardPage } from '../controllers/admin/dashboard.controllers';
 import fileUploadMiddleware from '../middleware/multer';
-import { getClientProductPage } from '../controllers/client/product.controllers';
+import { getClientProductPage, postAddProductToCart } from '../controllers/client/product.controllers';
 import { getAdminOrderPage } from '../controllers/admin/order.controllers';
 import { getAdminProductPage, getAdminUpdateProductPage, getCreateProduct, postCreateProduct, postDeleteProduct, updateProductInfo } from '../controllers/admin/product.controllers';
 import { getAuthentication, getUserLoginPage, getUserRegisterPage, postLogout, postRegister } from '../controllers/client/auth.controllers';
@@ -25,6 +25,7 @@ const webRoutes = (app: Express) => { // khai bao 1 ham va dat ten: webRoutes
     router.post("/user/logout", postLogout);
 
     router.get("/product/:id", getClientProductPage);
+    router.post("/add-product-to-cart/:id", postAddProductToCart);
 
     // admin
     router.get("/admin", getDashboardPage);
