@@ -12,6 +12,35 @@ export const addProductToCart =  async (quantity: number, id: number, userId: nu
 
     if (cart) {
         // update cart
+        await prisma.cart.update({
+            where: {id: cart.id},
+            data: {
+                sum: {
+                    increment: quantity, // tăng theo quantity
+                },
+            }
+        })
+        // update cart detail
+        const currentCartDetail = await prisma.cartDetail.findFirst({
+            where: {
+                cartId: cart.id,
+                productId: product.id
+            }
+        })
+        await prisma.cartDetail.upsert({
+            where: {
+                id: currentCartDetail?.id ?? 0 // nếu chưa tồn tại currentCartDetail -> id = 0 thì chạy ra hàm create
+            },
+            update: {
+                quantity: {increment: quantity}
+            },
+            create: {
+                quantity: quantity,
+                price: product.price,
+                cartId: cart.id,
+                productId: product.id
+            }
+        })
     } else {
         // create cart
         await prisma.cart.create({
