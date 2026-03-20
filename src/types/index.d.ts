@@ -8,6 +8,7 @@ declare global {
             phone: string;
             avatar: string | null;
             roleName: string | undefined;
+            sumCart: number;
         }
     }
 }

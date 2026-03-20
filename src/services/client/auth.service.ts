@@ -42,3 +42,10 @@ export const handleLogin = async (username: string, password: string, callback: 
     }
     return callback(null, user);
 }
+
+export const getUserSumCart = async (id: number) => {
+    const user = await prisma.cart.findUnique({
+        where: {userId: id}
+    });
+    return user?.sum ?? 0;
+}

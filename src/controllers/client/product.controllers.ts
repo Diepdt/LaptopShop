@@ -18,3 +18,12 @@ export const postAddProductToCart = async (req: Request, res: Response) => {
     }
     res.redirect("/");
 }
+
+export const getCartPage = async (req: Request, res: Response) => {
+    const userId = req.user?.id;
+    if (userId === null) {
+        res.redirect("/user/login");
+    }
+    console.log(">>> cart");
+    res.render("client/product/cart.ejs");
+}
